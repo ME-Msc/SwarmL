@@ -10,7 +10,7 @@
 
 - 多机任务**Task**层，负责调度多架无人机如何协同配合、信息交换
 - 单机行为**Behavior**层，负责描述单一无人机的动作序列
-- 单一动作**Action**层，描述无人机的一个原子动作的执行过程，该过程由基于规则或基于神经网络的语法进行控制
+- 单一动作**Action**层，描述无人机的一个原子动作的执行过程，该过程由基于规则或基于神经网络的语法进行控制。Action描述的是任务执行过程的业务动作，例如飞行、拍照、投弹、通信、照明、识别等。为业务动作而进行的前期数据准备并不是Action，例如路径规划、获取位置等。
 
 ## 词法规则 [Lexcial Conventions](./README.md/#lexcial-conventions)
 
@@ -29,13 +29,11 @@
 
 ### 关键字 [Keywords](./README.md/#keywords)
 
-- Task, Behavior, Action
-- @subtask, @behavior, @action
-- @uavTypes, @topic, @init, @goal, @routine
-- publish, subscribe, request, from, to
+- Main, Task, Behavior, Action, Agent
+- @init, @goal, @routine
+- publish, subscribe, put, get, from, to
 - each, order
 - if, else, return
-- Agent
 
 ### 常量 [Constants](./README.md/#constants)
 
@@ -196,6 +194,12 @@ agent类型 ::= 标识符
 4. 函数调用 //TODO:
 
 ## 作用域与文件包含 TODO
+import语句
+1.  `import map` 导入map.py文件，只可以调用，不可修改，地图文件用geojson格式描述，通过map.py读入
+2. `import EnvWrapper` 导入EnvWrapper.py文件，获取环境信息
+3. `import UavWrapper` 导入UavWrapper.py文件，获取无人机数据
+4. `import Network` 导入NetWork.py文件，配置运行时所需的算法、模型等
+
 
 ## 语法 [Grammar](./README.md/#grammar)
 

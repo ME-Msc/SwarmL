@@ -43,7 +43,7 @@ Identifiers begin with a letter or underscore and consist of letters, digits, or
 
 ### Operators
 
-- `+  -  *  /  %  =  ==  !=  >  >=  <  <=  ||`
+- `+  -  *  /  %  =  ==  !=  >  >=  <  <=  || [ ] { } ~ ' "`
 
 ## Grammar
 

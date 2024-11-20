@@ -1,8 +1,8 @@
 {
     "highlight.regexes": {
-        "(\\/\\*)(.*?)(\\*\\/)": { 
-            "pattern" : "/* */",
-            "filterFileRegex": ".*\\.swarm", 
+        "(\\/\\*)(.*?)(\\*\\/)": {
+            "pattern": "/* */",
+            "filterFileRegex": ".*\\.swarm",
             "decorations": [
                 {
                     "color": "#67913c"
@@ -15,26 +15,26 @@
                 }
             ]
         },
-        "([:~])": { 
-            "pattern" : ":",
+        "([:~])": {
+            "pattern": ":",
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
                 {
                     "color": "#3FBCE9"
                 }
             ]
         },
-        "([{}\\[\\]\\$])": { 
-            "pattern" : "{}[]",
+        "([{}\\[\\]\\$\\(\\)])": {
+            "pattern": "{}[]()",
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
                 {
                     "color": "#e1b327"
                 }
             ]
         },
-        "(\")(.*?)(\")": { 
-            "pattern" : "\"\"",
+        "(\")(.*?)(\")": {
+            "pattern": "\"\"",
             "filterFileRegex": ".*\\.swarm",
             "decorations": [
                 {
@@ -48,56 +48,25 @@
                 }
             ]
         },
-        "(\\()([^)]*?)(\\))": { 
-            "pattern" : "(sth)",
-            "filterFileRegex": ".*\\.swarm", 
-            "decorations": [ 
-                {
-                    "color": "#e1b327"
-                },
-                {
-                    "color": "#ffffff"
-                },
-                {
-                    "color": "#e1b327"
-                }
-            ]
-        },
-        "\\b(Action|Behavior|Task|Main|Agent|Port|\\|\\|)\\b": { 
+        "\\b(Action|Behavior|Task|Main|Agent|import|platform|\\|\\|)\\b": {
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
                 {
                     "color": "#F73859"
                 }
             ]
         },
-        "(<<.*>>)": { 
+        "\\b(return|if|else)\\b": {
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
-                {
-                    "color": "#8ef1f5"
-                }
-            ]
-        },
-        "(<.*>)": { 
-            "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
-                {
-                    "color": "#6f72f7"
-                }
-            ]
-        },
-        "(#.*#)": { 
-            "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
                 {
                     "color": "#db8bd7"
                 }
             ]
         },
-        "(@)(init|goal|routine)": { 
+        "(@)(init|goal|routine)": {
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
                 {
                     "color": "#e18127"
                 },
@@ -106,9 +75,17 @@
                 }
             ]
         },
-        "\\b(each|order|if|else|publish|subscribe|unsubscribe|get|put|from|to|return|True|False)\\b": { 
+        "\\b(each|order|True|False)\\b": {
             "filterFileRegex": ".*\\.swarm",
-            "decorations": [ 
+            "decorations": [
+                {
+                    "color": "#3FBCE9"
+                }
+            ]
+        },
+        "\\b(POST|GET|DGET|MODIFY)\\b": {
+            "filterFileRegex": ".*\\.swarm",
+            "decorations": [
                 {
                     "color": "#3FBCE9"
                 }

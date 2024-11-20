@@ -54,6 +54,6 @@ Identifiers begin with a letter or underscore and consist of letters, digits, or
 To make examples in VSCode highlight as shown in the image, follow these steps:
 
 - install plug-in [**Highlight**](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-highlight)
-- modify the setting.json of your vscode as [vscode-setting.json](./examples/zh-CN/vscode-settings.json)
+- modify the setting.json of your vscode as [vscode-setting.json](./vscode-settings.json)
 
 ![examples](./img/examples.png)

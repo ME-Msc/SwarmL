@@ -1,0 +1,125 @@
+platform Airsim
+import Map
+import Algorithm
+import Uav
+import Network
+
+Action takeOff_Action(){
+  Uav.takeOff_API();
+}
+Action flyToHeight_Action(h){
+  Uav.flyToHeight_API(h);
+}
+Action flyTo_Action(dest){
+  Uav.flyTo_API(dest);
+}
+Action getPosition_Action(){
+  pos = Uav.getPosition_API();
+  return pos;
+}
+Action takePicture_Action(){
+  pic = Uav.takePicture_API();
+  return pic;
+}
+Action cover_Action(net){
+  Uav.cover_API();
+}
+Action postDeliveryDest_Action(dest){
+  GET(findCount, cnt);
+  POST(deliveryDest, dest);
+  POST(findCount, cnt+1);
+}
+Action getDeliveryDest_Action(){
+  DGET(deliveryDest, dest);
+  return dest;
+}
+Action postFindCount_Action(c){
+  POST(findCount, c);
+}
+Action getFindCount_Action(){
+  GET(findCount, cnt);
+  return cnt;
+}
+Action dropGoods_Action(){
+  Uav.dropGoods_API();
+  MODIFY(deliveryCount, cnt, cnt+1);
+}
+Action goHome_Action(){
+  Uav.goHome_API();
+}
+
+Agent search_drone {
+  takeOff_Action, flyToHeight_Action, flyTo_Action, getPosition_Action, takePicture_Action, cover_Action, postDeliveryDest_Action, postFindCount_Action, getFindCount_Action, goHome_Action;
+}
+Agent delivery_drone {
+  takeOff_Action, flyToHeight_Action, flyTo_Action, getPosition_Action, getDeliveryDest_Action, dropGoods_Action, goHome_Action;
+}
+
+Behavior search_Behavior(h, net){
+  @init{
+    takeOff_Action();
+    flyToHeight_Action(h);
+    find_target = False;
+    postFindCount_Action(0);
+  }
+  @goal{
+    find_cnt = getFindCount_Action();
+    $ find_cnt >= 2
+  }
+  @routine{
+    cover_Action(net);
+  }
+  ||
+  {
+    picture = takePicture_Action();
+    find_target = Network.cnnRecognize(picture);
+    if(find_target == True){
+      destination = getPosition_Action();
+      postDeliveryDest_Action(destination);
+    }
+  }
+}
+
+Behavior delivery_Behavior(h) {
+  @init{
+    takeOff_Action();
+    flyToHeight_Action(h);
+    destination = getDeliveryDest_Action();
+    }
+  @goal{}
+  @routine{
+    flyTo_Action(destination);
+    dropGoods_Action();
+    goHome_Action();
+  }
+}
+
+Task search_delivery({agtA[stA~edA], agtB[stB~edB]}){
+  @init{
+    search_height = 40;
+    delivery_height = 50;
+	  POST(findCount, 0);
+	  POST(deliveryCount, 0);
+  }
+  @goal{
+	  GET(deliveryCount, cnt);
+    $ cnt >= 3
+  }
+  @routine{
+    each agtA[stA~edA] {
+      search_Behavior(search_height, Network.DQN_cover, city_map);
+    }
+  }
+  ||
+  {
+    each agtB[stB~edB] {
+      delivery_Behavior(delivery_height);
+    }
+  }
+}
+
+Main {
+  Agent search_drone 5;
+  Agent delivery_drone 2;
+  search_delivery({search_drone[0~3], delivery_drone[0~2]});
+}
